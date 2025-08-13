@@ -30,8 +30,7 @@ public class TaskService {
     }
 
     /*
-    TODO: Figure out how to manage tasks requests without all fields to update
-    TODO: Build or find alternatives to the Builder Pattern!
+    TODO: Find a way to rewrite this in a better way
     */
     public void updateTaskById(Integer id, Task taskUpdated) {
         Task taskEntity = readTasksById(id);
