@@ -33,14 +33,20 @@ public class Task {
     public Task() {
 
     }
-
+    // TODO: Update constructors to generate initial createdAt, UpdatedAt and status
     public Task(String title){
         this.title = title;
+        this.status = Status.PENDING;
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
+        this.status = Status.PENDING;
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
     public Integer getId() {
