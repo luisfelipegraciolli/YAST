@@ -30,12 +30,11 @@ Este projeto foi criado com o objetivo de **aprender fundamentos do Spring Boot*
 - **Maven**
 - **Hibernate**
 - **Docker** (opcional, para banco de dados)
-- 
+
 ---
 ## 📌 Próximos Passos
 
 - Adicionar paginação e filtros
-
 - Criar testes unitários
-
 - Documentação da API com Swagger
+- Considerar expor `PATCH /tasks/{id}` explicitando a semântica de atualização parcial
