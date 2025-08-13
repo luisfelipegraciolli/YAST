@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="tasks/")
+@RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
 
@@ -25,24 +25,24 @@ public class TaskController {
 
 
     // TODO: Rewrite this later for cleaner code
-    @GetMapping("/listALl")
+    @GetMapping("/")
     public ResponseEntity<List<Task>> listAllTasks(){
         return ResponseEntity.ok(taskService.readAllTasks());
     }
 
-    @GetMapping("/listById")
-    public ResponseEntity<Task> getTaskById(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Integer id){
         return ResponseEntity.ok(taskService.readTasksById(id));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateTaskById(@RequestParam Integer id, @RequestBody Task task){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Void> updateTaskById(@PathVariable Integer id, @RequestBody Task task){
         taskService.updateTaskById(id, task);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteTaskById(@RequestParam Integer id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteTaskById(@PathVariable Integer id){
         taskService.deleteTaskById(id);
         return ResponseEntity.ok().build();
     }
