@@ -51,6 +51,10 @@ public class Task {
 
     public Task(String title) {
         this(title, null);
+        this.status = Status.PENDING;
+        Date now = new Date();
+        this.createdAt = now;
+        this.updatedAt = now;
     }
 
     public Task(String title, String description) {
