@@ -34,9 +34,15 @@ public class TaskService {
     */
     public void updateTaskById(Integer id, Task taskUpdated) {
         Task taskEntity = readTasksById(id);
-        taskEntity.setTitle(taskUpdated.getTitle());
-        taskEntity.setDescription(taskUpdated.getDescription());
-        taskEntity.setStatus(taskUpdated.getStatus());
+        if(taskUpdated.getTitle() != null){
+            taskEntity.setTitle(taskUpdated.getTitle());
+        }
+        if(taskUpdated.getDescription() != null){
+            taskEntity.setDescription(taskUpdated.getDescription());
+        }
+        if(taskUpdated.getStatus() != null){
+            taskEntity.setStatus(taskUpdated.getStatus());
+        }
         taskEntity.setUpdatedAt(new Date());
         taskRepository.saveAndFlush(taskEntity);
     }
