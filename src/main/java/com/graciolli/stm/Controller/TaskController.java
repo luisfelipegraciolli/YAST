@@ -3,9 +3,11 @@ package com.graciolli.stm.Controller;
 
 import com.graciolli.stm.Repository.Task;
 import com.graciolli.stm.Service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,33 +19,30 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createTask(@RequestBody Task task){
-        taskService.createTask(task);
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task){
+        Task created = taskService.createTask(task);
+        return ResponseEntity.created(URI.create("/tasks/" + created.getId())).body(created);
     }
 
-
-    // TODO: Rewrite this later for cleaner code
-    @GetMapping("/")
-    public ResponseEntity<List<Task>> listAllTasks(){
+    @GetMapping
+    public ResponseEntity<List<Task>> findAll(){
         return ResponseEntity.ok(taskService.readAllTasks());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Integer id){
+    public ResponseEntity<Task> findById(@PathVariable Integer id){
         return ResponseEntity.ok(taskService.readTasksById(id));
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateTaskById(@PathVariable Integer id, @RequestBody Task task){
-        taskService.updateTaskById(id, task);
-        return ResponseEntity.ok().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTaskById(@PathVariable Integer id,  @RequestBody Task task){
+        return ResponseEntity.ok((taskService.updateTaskById(id, task)));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTaskById(@PathVariable Integer id){
         taskService.deleteTaskById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
