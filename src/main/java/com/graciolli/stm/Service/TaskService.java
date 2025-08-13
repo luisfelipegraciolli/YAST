@@ -15,8 +15,9 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public void createTask(Task task){
+    public Task createTask(Task task){
         taskRepository.saveAndFlush(task);
+        return task;
     }
 
     public List<Task> readAllTasks(){
@@ -29,22 +30,25 @@ public class TaskService {
         );
     }
 
-    /*
-    TODO: Find a way to rewrite this in a better way
-    */
-    public void updateTaskById(Integer id, Task taskUpdated) {
-        Task taskEntity = readTasksById(id);
-        if(taskUpdated.getTitle() != null){
-            taskEntity.setTitle(taskUpdated.getTitle());
+    public Task updateTaskById(Integer id, Task updatedTask) {
+        Task existingTask = readTasksById(id);
+        applyNonNullUpdates(existingTask, updatedTask);
+        Date now = new Date();
+        existingTask.setUpdatedAt(now);
+        taskRepository.saveAndFlush(existingTask);
+        return existingTask;
+    }
+
+    private void applyNonNullUpdates(Task target, Task source) {
+        if (source.getTitle() != null) {
+            target.setTitle(source.getTitle());
         }
-        if(taskUpdated.getDescription() != null){
-            taskEntity.setDescription(taskUpdated.getDescription());
+        if (source.getDescription() != null) {
+            target.setDescription(source.getDescription());
         }
-        if(taskUpdated.getStatus() != null){
-            taskEntity.setStatus(taskUpdated.getStatus());
+        if (source.getStatus() != null) {
+            target.setStatus(source.getStatus());
         }
-        taskEntity.setUpdatedAt(new Date());
-        taskRepository.saveAndFlush(taskEntity);
     }
 
     public void deleteTaskById(Integer id){
