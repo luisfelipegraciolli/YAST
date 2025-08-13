@@ -1,12 +1,13 @@
 package com.graciolli.stm.Repository;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
 @Entity
+// TODO: Figure out "Cannot resolve Table 'tasks"
 @Table(name="tasks")
 public class Task {
 
@@ -14,11 +15,12 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    // TODO: Add column annotations for fields
     @NotNull
-    @Max(100)
+    @Size(max=100)
     private String title;
 
-    @Max(255)
+    @Size(max=255)
     private String description;
 
     private Status status;
